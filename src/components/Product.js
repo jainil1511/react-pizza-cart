@@ -1,7 +1,37 @@
 import {Link} from 'react-router-dom';
+import { useState , useContext} from 'react';
+import { CartContext } from '../CartContext';
 const Product = (props) => {
-    console.log(props)
+  const [isAdding,setIsAdding] = useState(false);
+  //  console.log(props)
+    let {cart,setcart} = useContext(CartContext);
     const {product} = props;
+    const addToCart = (event,product) => {
+     
+
+      event.preventDefault();
+     let _cart = {...cart};
+     if(!_cart.items){
+      _cart.items = {};
+     }
+     if(_cart.items[product._id]){
+       _cart.items[product._id] += 1;
+     }else{
+      _cart.items[product._id] = 1;
+     }
+
+     if(!_cart.totalItems){
+      _cart.totalItems = 0;
+     }
+     _cart.totalItems += 1;
+
+     setcart(_cart);
+     setIsAdding(true);
+     setTimeout(()=>{
+      setIsAdding(false);
+     },1000);
+      // console.log(product)
+    }
   return (
     <Link to={`/products/${product._id}`}>
     <div>
@@ -12,7 +42,8 @@ const Product = (props) => {
     </div>
       <div className="flex justify-between items-center mt-4">
         <span>₹ {product.price}</span>
-        <button className='bg-yellow-500 py-1 px-4 rounded-full font-bold'>Add</button>
+        <button onClick={(e)=> { addToCart(e, product); }} 
+        className={`${isAdding ? 'bg-green-500':'bg-yellow-500' } py-1 px-4  rounded-full font-bold`}>ADD{isAdding ? 'ED' : ''}</button>
     </div>
 </div>
 </Link>
