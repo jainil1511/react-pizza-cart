@@ -25,7 +25,7 @@ const Navigation = () =>{
                     <Link to="/cart">
                         <div style={cartstyle}>
                             
-                            <span></span>
+                            <span>{cart.totalItems ? cart.totalItems : 0}</span>
                             <img className='ml-2' src="/images/cart.png" alt="cart-icon"/>
                         </div>
                     </Link>

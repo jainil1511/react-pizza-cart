@@ -4,7 +4,7 @@ import { CartContext } from '../CartContext';
 const Product = (props) => {
   const [isAdding,setIsAdding] = useState(false);
   //  console.log(props)
-    let {cart,setcart} = useContext(CartContext);
+    let {cart,setCart} = useContext(CartContext);
     const {product} = props;
     const addToCart = (event,product) => {
      
@@ -25,7 +25,7 @@ const Product = (props) => {
      }
      _cart.totalItems += 1;
 
-     setcart(_cart);
+     setCart(_cart);
      setIsAdding(true);
      setTimeout(()=>{
       setIsAdding(false);
@@ -42,7 +42,7 @@ const Product = (props) => {
     </div>
       <div className="flex justify-between items-center mt-4">
         <span>₹ {product.price}</span>
-        <button onClick={(e)=> { addToCart(e, product); }} 
+        <button  disabled= {isAdding}onClick={(e)=> { addToCart(e, product); }} 
         className={`${isAdding ? 'bg-green-500':'bg-yellow-500' } py-1 px-4  rounded-full font-bold`}>ADD{isAdding ? 'ED' : ''}</button>
     </div>
 </div>

@@ -7,22 +7,25 @@ import Cart from './pages/Cart';
 import SingleProduct from './pages/SingleProduct';
 import {CartContext} from './CartContext';
 import { useEffect,useState } from 'react';
+import { getCart,storecart } from './helpers';
 
 const App =() => {
-    const [cart,setcart] = useState({});
+    const [cart,setCart] = useState({});
     //fetch from local storage
     useEffect(() => {
-   const cart = window.localStorage.getItem('cart');
-   setcart(JSON.parse(cart));
-   console.log(cart)
+  // const cart = window.localStorage.getItem('cart');
+    getCart().then(cart => {
+        setCart(JSON.parse(cart));
+    });
     }, []);
     useEffect(() =>{
-        window.localStorage.setItem('cart',JSON.stringify(cart));
+      //  window.localStorage.setItem('cart',JSON.stringify(cart));
+      storecart(JSON.stringify(cart));
     },[cart])
     return(
        <>
        <Router>
-           <CartContext.Provider value={{cart,setcart}}>
+           <CartContext.Provider value={{cart,setCart}}>
            <Navigation/>
            <Routes>
             <Route path="/" element ={<Home/>} exact></Route>
